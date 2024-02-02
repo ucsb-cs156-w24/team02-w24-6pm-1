@@ -2,7 +2,7 @@
 
 Instructions: <https://ucsb-cs156.github.io/w24/lab/team02.html>
 
-```
+
 | Table                       | Team Member        | Github Id        |
 |-----------------------------|--------------------|------------------|
 | `UCSBDiningCommonsMenuItem` | Philly Lim         | phillylim        |
@@ -13,7 +13,7 @@ Instructions: <https://ucsb-cs156.github.io/w24/lab/team02.html>
 | `Articles`                  | Shashank Bhagwani  | shashank790        |
 
 
-```
+
 
 Deployments:
 
