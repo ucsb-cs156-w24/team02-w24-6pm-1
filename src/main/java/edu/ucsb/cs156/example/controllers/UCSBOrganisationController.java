@@ -102,9 +102,9 @@ public class UCSBOrganisationController extends ApiController {
 
 
                 organisations.setOrgCode(incoming.getOrgCode());  
-                organisations.setOrgTranslationShort(incoming.getOrgTranslationShort());
-                organisations.setOrgTranslation(incoming.getOrgTranslation());
-                organisations.setInactive(incoming.getInactive());
+                // organisations.setOrgTranslationShort(incoming.getOrgTranslationShort());
+                // organisations.setOrgTranslation(incoming.getOrgTranslation());
+                // organisations.setInactive(incoming.getInactive());
                 // organisations.setLatitude(incoming.getLatitude());
                 // organisations.setLongitude(incoming.getLongitude());
 
