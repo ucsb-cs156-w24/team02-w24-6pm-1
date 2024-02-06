@@ -2,7 +2,7 @@
     "databaseChangeLog": [
       {
         "changeSet": {
-          "id": "UCSBHelpRequest-1",
+          "id": "HelpRequest-1",
           "author": "MattP",
           "preConditions": [
             {
@@ -12,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "UCSBHELPREQUEST"
+                    "tableName": "HELPREQUEST"
                   }
                 }
               ]
@@ -70,7 +70,7 @@
                     }
                   }]
                   ,
-                "tableName": "UCSBHELPREQUEST"
+                "tableName": "HELPREQUEST"
               }
             }
           ]
