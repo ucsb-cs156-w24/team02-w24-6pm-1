@@ -128,7 +128,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .teamId("manchester")
                                 .tableOrBreakoutRoom("6pm-1")
                                 .explanation("segfault")
-                                .solved(false)
+                                .solved(true)
                                 .requestTime(ldt1)
                                 .build();
 
@@ -136,7 +136,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/helprequests/post?requesterEmail=spam@gmail.com&teamId=manchester&tableOrBreakoutRoom=6pm-1&explanation=segfault&solved=false&requestTime=2022-01-03T00:00:00")
+                                post("/api/helprequests/post?requesterEmail=spam@gmail.com&teamId=manchester&tableOrBreakoutRoom=6pm-1&explanation=segfault&solved=true&requestTime=2022-01-03T00:00:00")
                                                 .with(csrf())) //FIXME url need fixing 
                                 .andExpect(status().isOk()).andReturn();
 
@@ -285,7 +285,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .teamId("manchester city")
                                 .tableOrBreakoutRoom("6pm-4")
                                 .explanation("memleak")
-                                .solved(false)
+                                .solved(true)
                                 .requestTime(ldt2)
                                 .build();
 
