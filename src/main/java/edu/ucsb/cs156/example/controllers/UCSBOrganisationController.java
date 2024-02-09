@@ -29,13 +29,13 @@ import javax.validation.Valid;
 public class UCSBOrganisationController extends ApiController {
 
     @Autowired
-    UCSBOrganisationRepository ucsborganisationRepository;
+    UCSBOrganisationRepository UCSBOrganisationRepository;
 
     @Operation(summary= "List all ucsb organisations")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<UCSBOrganisation> allOrganisations() {
-        Iterable<UCSBOrganisation> commons = ucsborganisationRepository.findAll();
+        Iterable<UCSBOrganisation> commons = UCSBOrganisationRepository.findAll();
         return commons;
     }
 
@@ -62,7 +62,7 @@ public class UCSBOrganisationController extends ApiController {
         // commons.setLatitude(latitude);
         // commons.setLongitude(longitude);
 
-        UCSBOrganisation savedOrganisation = ucsborganisationRepository.save(organisation);
+        UCSBOrganisation savedOrganisation = UCSBOrganisationRepository.save(organisation);
 
         return savedOrganisation;
     }
@@ -72,7 +72,7 @@ public class UCSBOrganisationController extends ApiController {
     @GetMapping("")
     public UCSBOrganisation getById(
             @Parameter(name="orgCode") @RequestParam String orgCode) {
-                UCSBOrganisation organisations = ucsborganisationRepository.findById(orgCode)
+                UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)
                 .orElseThrow(() -> new EntityNotFoundException(UCSBOrganisation.class, orgCode));
 
         return organisations;
@@ -83,10 +83,10 @@ public class UCSBOrganisationController extends ApiController {
     @DeleteMapping("")
     public Object deleteorganisations(
             @Parameter(name="orgCode") @RequestParam String orgCode) {
-                UCSBOrganisation organisations = ucsborganisationRepository.findById(orgCode)
+                UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)
                 .orElseThrow(() -> new EntityNotFoundException(UCSBOrganisation.class, orgCode));
 
-                ucsborganisationRepository.delete(organisations);
+        UCSBOrganisationRepository.delete(organisations);
         return genericMessage("UCSBOrganisation with id %s deleted".formatted(orgCode));
     }
 
@@ -97,7 +97,7 @@ public class UCSBOrganisationController extends ApiController {
             @Parameter(name="orgCode") @RequestParam String orgCode,
             @RequestBody @Valid UCSBOrganisation incoming) {
 
-            UCSBOrganisation organisations = ucsborganisationRepository.findById(orgCode)
+            UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)
                 .orElseThrow(() -> new EntityNotFoundException(UCSBOrganisation.class, orgCode));
 
 
@@ -108,9 +108,8 @@ public class UCSBOrganisationController extends ApiController {
                 // organisations.setLatitude(incoming.getLatitude());
                 // organisations.setLongitude(incoming.getLongitude());
 
-                ucsborganisationRepository.save(organisations);
+                UCSBOrganisationRepository.save(organisations);
 
         return organisations;
     }
 }
-
