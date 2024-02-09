@@ -27,7 +27,7 @@
                         "primaryKey": true,
                         "primaryKeyName": "CONSTRAINT_UCSBOrganisation"
                       },
-                      "name": "orgCode",
+                      "name": "org_code",
                       "type": "VARCHAR(255)"
                     }
                   },
@@ -43,14 +43,14 @@
 
                   {
                     "column": {
-                      "name": "orgTranslationShort",
-                      "type": "DOUBLE(17)"
+                      "name": "org_translation_short",
+                      "type": "VARCHAR(255)"
                     }
                   },
                   {
                     "column": {
-                      "name": "orgTranslation",
-                      "type": "DOUBLE(17)"
+                      "name": "org_translation",
+                      "type": "VARCHAR(255)"
                     }
                   }
                 ]
