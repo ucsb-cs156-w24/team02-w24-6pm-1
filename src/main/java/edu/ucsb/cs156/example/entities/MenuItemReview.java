@@ -17,7 +17,7 @@ import lombok.Builder;
 @NoArgsConstructor
   
 @Builder
-@Entity(name = "menu item review")
+@Entity(name = "menuitemreview")
 public class MenuItemReview 
 {
   @Id
