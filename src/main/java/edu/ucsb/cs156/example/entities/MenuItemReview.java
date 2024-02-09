@@ -15,14 +15,17 @@ import lombok.Builder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+  
 @Builder
-@Entity(name = "menuitemreview")
-public class MenuItemReview {
+@Entity(name = "menu item review")
+public class MenuItemReview 
+{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   private long itemId;
+  
   private String reviewerEmail;
   private int stars;
   private LocalDateTime dateReviewed; 
