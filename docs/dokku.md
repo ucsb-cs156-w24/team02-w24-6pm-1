@@ -7,7 +7,7 @@ On your dokku server (once per team; the dokku server is shared by the entire te
 
 1. Create the app: 
    ```
-   dokku apps:create team02
+   dokku apps:create team02-w24-6pm-1 
    ```
 2. Enable HTTPS: <https://ucsb-cs156.github.io/topics/dokku/enabling_https.html>
 3. Enable Postgres: <https://ucsb-cs156.github.io/topics/dokku/postgres_database.html>
@@ -15,7 +15,7 @@ On your dokku server (once per team; the dokku server is shared by the entire te
 5. Setup Environment Variables: <https://ucsb-cs156.github.io/topics/dokku/environment_variables.html>
 6. Sync with repo (substitute your own team name):
    ```
-   dokku git:sync team02 https://github.com/ucsb-cs156-w24/team02-w24-6pm-4 main
+   dokku git:sync team02 https://github.com/ucsb-cs156-w24/team02-w24-6pm-1 main
    ```
 
    We always deploy the `main` branch only on the `team02` deployment, which we consider our "production" deployment (or "prod").  When working in a team environment, it is typical
@@ -24,7 +24,7 @@ On your dokku server (once per team; the dokku server is shared by the entire te
 
 7. Build app:
    ```
-   dokku ps:rebuild team02
+   dokku ps:rebuild team02-w24-6pm-1 
    ```
 
 Any time you need to redeploy, you can do so by repeating steps 6 and 7.
