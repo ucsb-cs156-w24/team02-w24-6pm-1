@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,24 +61,23 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void logged_in_user_can_get_all_articles() throws Exception {
 
                 // arrange
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
+                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2024-02-02T00:00:00");
 
                 Articles article1 = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt1)
                                 .build();
 
-                LocalDate ld2 = LocalDate.parse("2022-01-02");
-
                 Articles article2 = Articles.builder()
-                                .title("title2")
-                                .url("url2")
-                                .explanation("explanation2")
-                                .email("email2")
-                                .dateAdded(ld2)
+                                .title("article2")
+                                .url("article2url.com")
+                                .explanation("article2Explanation")
+                                .email("article2@email.com")
+                                .dateAdded(ldt2)
                                 .build();
 
                 ArrayList<Articles> expectedArticles = new ArrayList<>();
@@ -118,21 +117,21 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void an_admin_user_can_post_a_new_article() throws Exception {
                 // arrange
 
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
+                LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 Articles article1 = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt)
                                 .build();
 
                 when(articlesRepository.save(eq(article1))).thenReturn(article1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/articles/post?title=title1&url=url1&explanation=explanation1&email=email1&dateAdded=2022-01-03")
+                                post("/api/articles/post?title=article1&url=article1url.com&explanation=article1Explanation&email=article1@email.com&dateAdded=2022-01-03T00:00:00")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -156,14 +155,14 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
 
                 // arrange
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
+                LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 Articles article1 = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt)
                                 .build();
 
                 when(articlesRepository.findById(eq(7L))).thenReturn(Optional.of(article1));
@@ -206,14 +205,14 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void admin_can_delete_a_date() throws Exception {
                 // arrange
 
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
+                LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 Articles article1 = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt)
                                 .build();
 
 
@@ -260,23 +259,23 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void admin_can_edit_an_existing_article() throws Exception {
                 // arrange
 
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
-                LocalDate ld2 = LocalDate.parse("2022-01-02");
+                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2024-02-02T00:00:00");
 
                 Articles articleOrig = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt1)
                                 .build();
                 
                 Articles articleEdited = Articles.builder()
-                                .title("title2")
-                                .url("url2")
-                                .explanation("explanation2")
-                                .email("email2")
-                                .dateAdded(ld2)
+                                .title("article2")
+                                .url("article2url.com")
+                                .explanation("article2Explanation")
+                                .email("article2@email.com")
+                                .dateAdded(ldt2)
                                 .build();
 
 
@@ -306,14 +305,14 @@ public class ArticlesControllerTests extends ControllerTestCase {
         public void admin_cannot_edit_article_that_does_not_exist() throws Exception {
                 // arrange
 
-                LocalDate ld1 = LocalDate.parse("2022-01-03");
+                LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 Articles articleEdited = Articles.builder()
-                                .title("title1")
-                                .url("url1")
-                                .explanation("explanation1")
-                                .email("email1")
-                                .dateAdded(ld1)
+                                .title("article1")
+                                .url("article1url.com")
+                                .explanation("article1Explanation")
+                                .email("article1@email.com")
+                                .dateAdded(ldt)
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(articleEdited);

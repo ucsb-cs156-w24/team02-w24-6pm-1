@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Tag(name = "Articles")
 @RequestMapping("/api/articles")
@@ -52,7 +52,7 @@ public class ArticlesController extends ApiController {
             @Parameter(name="url") @RequestParam String url,
             @Parameter(name="explanation") @RequestParam String explanation,
             @Parameter(name="email") @RequestParam String email,
-            @Parameter(name="dateAdded") @RequestParam("dateAdded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateAdded)
+            @Parameter(name="dateAdded", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("dateAdded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateAdded)
             throws JsonProcessingException {
 
         // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -60,16 +60,16 @@ public class ArticlesController extends ApiController {
 
         log.info("dateAdded={}", dateAdded);
 
-        Articles articles = new Articles();
-        articles.setTitle(title);
-        articles.setUrl(url);
-        articles.setExplanation(explanation);
-        articles.setEmail(email);
-        articles.setDateAdded(dateAdded);
+        Articles article = new Articles();
+        article.setTitle(title);
+        article.setUrl(url);
+        article.setExplanation(explanation);
+        article.setEmail(email);
+        article.setDateAdded(dateAdded);
 
-        Articles savedArticles = articlesRepository.save(articles);
+        Articles savedArticle = articlesRepository.save(article);
 
-        return savedArticles;
+        return savedArticle;
     }
 
     @Operation(summary= "Get a single article")
