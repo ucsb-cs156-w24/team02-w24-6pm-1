@@ -36,7 +36,7 @@
                 },
                 {
                   "column": {
-                    "name": "ITEMID",
+                    "name": "ITEM_ID",
                     "type": "BIGINT",
                     "constraints": {
                       "nullable": false
@@ -45,7 +45,7 @@
                 },
                 {
                   "column": {
-                    "name": "REVIEWEREMAIL",
+                    "name": "REVIEWER_EMAIL",
                     "type": "VARCHAR(255)",
                     "constraints": {
                       "nullable": false
@@ -63,7 +63,7 @@
                 },
                 {
                   "column": {
-                    "name": "DATEREVIEWED",
+                    "name": "DATE_REVIEWED",
                     "type": "TIMESTAMP",
                     "constraints": {
                       "nullable": false
