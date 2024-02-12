@@ -9,7 +9,6 @@ import edu.ucsb.cs156.example.repositories.MenuItemReviewRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,7 +37,7 @@ import static org.mockito.Mockito.when;
 public class MenuItemReviewControllerTest extends ControllerTestCase {
 
         @MockBean
-        MenuItemReviewRepository repo;
+        MenuItemReviewRepository MenuItemReviewRepository;
 
         @MockBean
         UserRepository userRepository;
@@ -67,9 +66,9 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewDate1 = MenuItemReview.builder()
                                                                 .itemId(0)
-                                                                .reviewerEmail("fakereviewer1@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(3)
-                                                                .comments("Dope")
+                                                                .comments("kash")
                                                                 .dateReviewed(ldt1)
                                                                 .build();
 
@@ -77,9 +76,9 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewDate2 = MenuItemReview.builder()
                                                                 .itemId(1)
-                                                                .reviewerEmail("fakereviewer2@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(2)
-                                                                .comments("Dank")
+                                                                .comments("kush")
                                                                 .dateReviewed(ldt2)
                                                                 .build();
 
@@ -87,7 +86,7 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
                 expectedDates.addAll(Arrays.asList(reviewDate1, reviewDate2));
           
 
-                when(repo.findAll()).thenReturn(expectedDates);
+                when(MenuItemReviewRepository.findAll()).thenReturn(expectedDates);
 
                 // act
           
@@ -96,7 +95,7 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 // assert
 
-                verify(repo, times(1)).findAll();
+                verify(MenuItemReviewRepository, times(1)).findAll();
                 String expectedJson = mapper.writeValueAsString(expectedDates);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
@@ -129,22 +128,22 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewDate1 = MenuItemReview.builder()
                                                                 .itemId(0)
-                                                                .reviewerEmail("fakereviewer1@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(3)
-                                                                .comments("Dope")
+                                                                .comments("kash")
                                                                 .dateReviewed(ldt1)
                                                                 .build();
 
-                when(repo.save(eq(reviewDate1))).thenReturn(reviewDate1);
+                when(MenuItemReviewRepository.save(eq(reviewDate1))).thenReturn(reviewDate1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/menuitemreview/post?itemId=0&email=fakereviewer1@gmail.com&stars=3&comments=Dope&timestamp=2022-01-03T00:00:00")
+                                post("/api/menuitemreview/post?itemId=0&email=kush@gmail.com&stars=3&comments=kash&timestamp=2022-01-03T00:00:00")
                                         .with(csrf()))
                                         .andExpect(status().isOk()).andReturn();
 
                 // assert
-                verify(repo, times(1)).save(reviewDate1);
+                verify(MenuItemReviewRepository, times(1)).save(reviewDate1);
                 String expectedJson = mapper.writeValueAsString(reviewDate1);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
@@ -154,11 +153,10 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
         // Tests for GET /api/menuitemreview?id=...
 
         @Test
-        public void logged_out_users_cannot_get_by_id() throws Exception
-        {
+        public void logged_out_users_cannot_get_by_id() throws Exception{
                 mockMvc.perform(get("/api/menuitemreview?id=7"))
-                                .andExpect(status().is(403)); // logged out users can't get by id
-        }
+                                .andExpect(status().is(403)); 
+                }
 
         @WithMockUser(roles = { "USER" })
         @Test
@@ -170,13 +168,13 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewDate1 = MenuItemReview.builder()
                                                                 .itemId(0)
-                                                                .reviewerEmail("fakereviewer1@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(3)
-                                                                .comments("Dope")
+                                                                .comments("kash")
                                                                 .dateReviewed(ldt1)
                                                                 .build();
 
-                when(repo.findById(eq(7L))).thenReturn(Optional.of(reviewDate1));
+                when(MenuItemReviewRepository.findById(eq(7L))).thenReturn(Optional.of(reviewDate1));
 
                 // act
                 MvcResult response = mockMvc.perform(get("/api/menuitemreview?id=7"))
@@ -184,7 +182,7 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 // assert
 
-                verify(repo, times(1)).findById(eq(7L));
+                verify(MenuItemReviewRepository, times(1)).findById(eq(7L));
                 String expectedJson = mapper.writeValueAsString(reviewDate1);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
@@ -195,18 +193,18 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
         public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
 
                 // arrange
-                when(repo.findById(eq(7L))).thenReturn(Optional.empty());
+                when(MenuItemReviewRepository.findById(eq(5L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/menuitemreview?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/menuitemreview?id=5"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
 
-                verify(repo, times(1)).findById(eq(7L));
+                verify(MenuItemReviewRepository, times(1)).findById(eq(5L));
                 Map<String, Object> json = responseToJson(response);
                 assertEquals("EntityNotFoundException", json.get("type"));
-                assertEquals("MenuItemReview with id 7 not found", json.get("message"));
+                assertEquals("MenuItemReview with id 5 not found", json.get("message"));
         }
 
         
@@ -214,34 +212,33 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_can_delete_a_date() throws Exception 
-  {
+        public void admin_can_delete_a_date() throws Exception {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 MenuItemReview reviewDate1 = MenuItemReview.builder()
                                                                 .itemId(0)
-                                                                .reviewerEmail("fakereviewer1@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(3)
-                                                                .comments("Dope")
+                                                                .comments("kash")
                                                                 .dateReviewed(ldt1)
                                                                 .build();
 
-                when(repo.findById(eq(15L))).thenReturn(Optional.of(reviewDate1));
+                when(MenuItemReviewRepository.findById(eq(13L))).thenReturn(Optional.of(reviewDate1));
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                delete("/api/menuitemreview?id=15")
+                                delete("/api/menuitemreview?id=13")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
-                verify(repo, times(1)).findById(15L);
-                verify(repo, times(1)).delete(any());
+                verify(MenuItemReviewRepository, times(1)).findById(13L);
+                verify(MenuItemReviewRepository, times(1)).delete(any());
 
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("MenuItemReview with id 15 deleted", json.get("message"));
+                assertEquals("MenuItemReview with id 13 deleted", json.get("message"));
         }
         
         @WithMockUser(roles = { "ADMIN", "USER" })
@@ -250,18 +247,18 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
                         throws Exception {
                 // arrange
 
-                when(repo.findById(eq(15L))).thenReturn(Optional.empty());
+                when(MenuItemReviewRepository.findById(eq(13L))).thenReturn(Optional.empty());
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                delete("/api/menuitemreview?id=15")
+                                delete("/api/menuitemreview?id=13")
                                         .with(csrf()))
                                 .andExpect(status().isNotFound()).andReturn();
 
           
-                verify(repo, times(1)).findById(15L);
+                verify(MenuItemReviewRepository, times(1)).findById(13L);
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("MenuItemReview with id 15 not found", json.get("message"));
+                assertEquals("MenuItemReview with id 13 not found", json.get("message"));
                           
         }
 
@@ -278,9 +275,9 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewOriginal = MenuItemReview.builder()
                                                                 .itemId(0)
-                                                                .reviewerEmail("fakereviewer1@gmail.com")
+                                                                .reviewerEmail("kush@gmail.com")
                                                                 .stars(3)
-                                                                .comments("Dope")
+                                                                .comments("kash")
                                                                 .dateReviewed(ldt1)
                                                                 .build();
 
@@ -288,15 +285,15 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewEdited = MenuItemReview.builder()
                                                                 .itemId(1)
-                                                                .reviewerEmail("fakereviewer2@gmail.com")
+                                                                .reviewerEmail("kush2@gmail.com")
                                                                 .stars(2)
-                                                                .comments("Dank")
+                                                                .comments("kush")
                                                                 .dateReviewed(ldt2)
                                                                 .build();
 
                 String requestBody = mapper.writeValueAsString(reviewEdited);
 
-                when(repo.findById(eq(67L))).thenReturn(Optional.of(reviewOriginal));
+                when(MenuItemReviewRepository.findById(eq(67L))).thenReturn(Optional.of(reviewOriginal));
 
                 // act
                 MvcResult response = mockMvc.perform(
@@ -308,8 +305,8 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
-                verify(repo, times(1)).findById(67L);
-                verify(repo, times(1)).save(reviewEdited); // should be saved with correct user
+                verify(MenuItemReviewRepository, times(1)).findById(67L);
+                verify(MenuItemReviewRepository, times(1)).save(reviewEdited); 
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(requestBody, responseString);
         }
@@ -324,15 +321,15 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
 
                 MenuItemReview reviewEdited = MenuItemReview.builder()
                                                                 .itemId(1)
-                                                                .reviewerEmail("fakereviewer2@gmail.com")
+                                                                .reviewerEmail("kush2@gmail.com")
                                                                 .stars(2)
-                                                                .comments("Dank")
+                                                                .comments("kush")
                                                                 .dateReviewed(ldt2)
                                                                 .build();
 
                 String requestBody = mapper.writeValueAsString(reviewEdited);
 
-                when(repo.findById(eq(67L))).thenReturn(Optional.empty());
+                when(MenuItemReviewRepository.findById(eq(67L))).thenReturn(Optional.empty());
 
                 
                 MvcResult response = mockMvc.perform
@@ -345,7 +342,7 @@ public class MenuItemReviewControllerTest extends ControllerTestCase {
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
-                verify(repo, times(1)).findById(67L);
+                verify(MenuItemReviewRepository, times(1)).findById(67L);
                 Map<String, Object> json = responseToJson(response);
                 assertEquals("MenuItemReview with id 67 not found", json.get("message"));
 
