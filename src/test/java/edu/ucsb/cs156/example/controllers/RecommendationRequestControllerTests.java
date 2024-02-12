@@ -42,18 +42,18 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
     @MockBean
     UserRepository userRepository;
 
-    // Tests for GET /api/recommendation-requests/all
+    // Tests for GET /api/recommendationrequests/all
 
     @Test
     public void logged_out_users_cannot_get_all() throws Exception {
-        mockMvc.perform(get("/api/recommendation-requests/all"))
+        mockMvc.perform(get("/api/recommendationrequests/all"))
                 .andExpect(status().is(403)); // logged out users can't get all
     }
 
     @WithMockUser(roles = { "USER" })
     @Test
     public void logged_in_users_can_get_all() throws Exception {
-        mockMvc.perform(get("/api/recommendation-requests/all"))
+        mockMvc.perform(get("/api/recommendationrequests/all"))
                 .andExpect(status().is(200)); // logged
     }
 
@@ -96,7 +96,7 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
         when(recommendationRequestRepository.findAll()).thenReturn(expectedRequests);
 
         // act
-        MvcResult response = mockMvc.perform(get("/api/recommendation-requests/all"))
+        MvcResult response = mockMvc.perform(get("/api/recommendationrequests/all"))
                 .andExpect(status().isOk()).andReturn();
 
         // assert
@@ -107,18 +107,18 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
 
-// Tests for POST /api/recommendation-requests/post...
+// Tests for POST /api/recommendationrequests/post...
 
 @Test
 public void logged_out_users_cannot_post() throws Exception {
-    mockMvc.perform(post("/api/recommendation-requests/post"))
+    mockMvc.perform(post("/api/recommendationrequests/post"))
             .andExpect(status().is(403));
 }
 
 @WithMockUser(roles = { "USER" })
 @Test
 public void logged_in_regular_users_cannot_post() throws Exception {
-    mockMvc.perform(post("/api/recommendation-requests/post"))
+    mockMvc.perform(post("/api/recommendationrequests/post"))
             .andExpect(status().is(403)); // only admins can post
 }
 
@@ -145,7 +145,7 @@ public void an_admin_user_can_post_a_new_recommendation_requests() throws Except
 
     // act
     MvcResult response = mockMvc.perform(
-        post("/api/recommendation-requests/post?requesterEmail=user1@example.com&professorEmail=prof1@example.com&explanation=Request explanation 1&DateRequest=2022-01-03T00:00:00&DateNeeded=2022-01-03T00:00:00&done=true")
+        post("/api/recommendationrequests/post?requesterEmail=user1@example.com&professorEmail=prof1@example.com&explanation=Request explanation 1&DateRequest=2022-01-03T00:00:00&DateNeeded=2022-01-03T00:00:00&done=true")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
             //.andExpect(status().isOk()).andReturn(); 
@@ -158,11 +158,11 @@ public void an_admin_user_can_post_a_new_recommendation_requests() throws Except
     assertEquals(expectedJson, responseString);
 }
 
-// Tests for GET /api/recommendation-requests?id=...
+// Tests for GET /api/recommendationrequests?id=...
 
 @Test
 public void logged_out_users_cannot_get_by_id() throws Exception {
-    mockMvc.perform(get("/api/recommendation-requests?id=1"))
+    mockMvc.perform(get("/api/recommendationrequests?id=1"))
             .andExpect(status().is(403)); // logged out users can't get by id
 }
 
@@ -187,7 +187,7 @@ public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws E
     when(recommendationRequestRepository.findById(eq(1L))).thenReturn(Optional.of(request));
 
     // act
-    MvcResult response = mockMvc.perform(get("/api/recommendation-requests?id=1"))
+    MvcResult response = mockMvc.perform(get("/api/recommendationrequests?id=1"))
             .andExpect(status().isOk()).andReturn();
 
     // assert
@@ -205,7 +205,7 @@ public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() 
     when(recommendationRequestRepository.findById(eq(1L))).thenReturn(Optional.empty());
 
     // act
-    MvcResult response = mockMvc.perform(get("/api/recommendation-requests?id=1"))
+    MvcResult response = mockMvc.perform(get("/api/recommendationrequests?id=1"))
             .andExpect(status().isNotFound()).andReturn();
 
     // assert
@@ -215,7 +215,7 @@ public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() 
     assertEquals("RecommendationRequest with id 1 not found", json.get("message"));
 }
 
-// Tests for DELETE /api/recommendation-requests?id=...
+// Tests for DELETE /api/recommendationrequests?id=...
 
 @WithMockUser(roles = { "ADMIN", "USER" })
 @Test
@@ -238,7 +238,7 @@ public void admin_can_delete_a_recommendation_request() throws Exception {
 
     // act
     MvcResult response = mockMvc.perform(
-            delete("/api/recommendation-requests?id=15")
+            delete("/api/recommendationrequests?id=15")
                     .with(csrf()))
             .andExpect(status().isOk()).andReturn();
 
@@ -259,7 +259,7 @@ public void admin_tries_to_delete_non_existent_recommendation_request_and_gets_r
 
     // act
     MvcResult response = mockMvc.perform(
-            delete("/api/recommendation-requests?id=15")
+            delete("/api/recommendationrequests?id=15")
                     .with(csrf()))
             .andExpect(status().isNotFound()).andReturn();
 
@@ -269,7 +269,7 @@ public void admin_tries_to_delete_non_existent_recommendation_request_and_gets_r
     assertEquals("RecommendationRequest with id 15 not found", json.get("message"));
 }
 
-// Tests for PUT /api/recommendation-requests?id=...
+// Tests for PUT /api/recommendationrequests?id=...
 
 // @WithMockUser(roles = { "ADMIN", "USER" })
 // @Test
@@ -294,7 +294,7 @@ public void admin_tries_to_delete_non_existent_recommendation_request_and_gets_r
 //     updatedRequest.setExplanation("request explanation");
 
 // }
-/// Tests for PUT /api/recommendation-requests?id=...
+/// Tests for PUT /api/recommendationrequests?id=...
 
 @WithMockUser(roles = { "ADMIN", "USER" })
 @Test
@@ -331,7 +331,7 @@ public void admin_can_edit_an_existing_recommendation_request() throws Exception
 
     // act
     MvcResult response = mockMvc.perform(
-            put("/api/recommendation-requests?id=67")
+            put("/api/recommendationrequests?id=67")
                     .contentType(MediaType.APPLICATION_JSON)
                     .characterEncoding("utf-8")
                     .content(requestBody)
@@ -368,7 +368,7 @@ public void admin_cannot_edit_recommendation_request_that_does_not_exist() throw
 
     // act
     MvcResult response = mockMvc.perform(
-            put("/api/recommendation-requests?id=67")
+            put("/api/recommendationrequests?id=67")
                     .contentType(MediaType.APPLICATION_JSON)
                     .characterEncoding("utf-8")
                     .content(requestBody)
