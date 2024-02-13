@@ -112,11 +112,11 @@ import javax.validation.Valid;
 <span class="fc" id="L112">        RecommendationRequest reqst = recommendationRequestRepository.findById(id)</span>
 <span class="fc" id="L113">                .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));</span>
 
-<span class="fc" id="L115">        reqst.setRequesterEmail(incoming.getRequesterEmail());</span>
-<span class="fc" id="L116">        reqst.setProfessorEmail(incoming.getProfessorEmail());</span>
-<span class="fc" id="L117">        reqst.setExplanation(incoming.getExplanation());</span>
-<span class="fc" id="L118">        reqst.setDateRequest(incoming.getDateRequest());</span>
-<span class="fc" id="L119">        reqst.setDateNeeded(incoming.getDateNeeded());</span>
+        // reqst.setRequesterEmail(incoming.getRequesterEmail());
+        // reqst.setProfessorEmail(incoming.getProfessorEmail());
+        // reqst.setExplanation(incoming.getExplanation());
+        // reqst.setDateRequest(incoming.getDateRequest());
+        // reqst.setDateNeeded(incoming.getDateNeeded());
         // reqst.setDone(incoming.getDone());
 
 <span class="fc" id="L122">        recommendationRequestRepository.save(reqst);</span>
