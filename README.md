@@ -19,7 +19,7 @@ Deployments:
 
 * Prod: <https://team02-w24-6pm-1.dokku-09.cs.ucsb.edu/>
 [TODO]
-* QA: <https://team02-qa.dokku-17.cs.ucsb.edu>
+* QA: <https://team02-qa.dokku-09.cs.ucsb.edu>
 
 # Setup before running application
 
