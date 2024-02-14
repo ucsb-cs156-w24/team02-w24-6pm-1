@@ -76,7 +76,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                 LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
 
                 HelpRequest helpRequest2 = HelpRequest.builder()
-                                .requesterEmail("spam2@gmail.com")
+                                .requesterEmail("spam21@gmail.com")
                                 .teamId("manchester city")
                                 .tableOrBreakoutRoom("6pm-4")
                                 .explanation("memleak")
@@ -281,7 +281,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .build();
 
                 HelpRequest helpRequestEdited = HelpRequest.builder()
-                                .requesterEmail("spam2@gmail.com")
+                                .requesterEmail("spam21@gmail.com")
                                 .teamId("manchester city")
                                 .tableOrBreakoutRoom("6pm-4")
                                 .explanation("memleak")
