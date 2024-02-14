@@ -83,7 +83,7 @@ describe("UCSBDatesEditPage tests", () => {
             axiosMock.onPut('/api/ucsbdates').reply(200, {
                 id: "17",
                 quarterYYYYQ: '20224',
-                name: "Christmas Morning2",
+                name: "Christmas Morning",
                 localDateTime: "2022-12-25T08:00"
             });
         });
@@ -151,20 +151,20 @@ describe("UCSBDatesEditPage tests", () => {
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(quarterYYYYQField, { target: { value: '20224' } })
-            fireEvent.change(nameField, { target: { value: 'Christmas Morning2' } })
+            fireEvent.change(nameField, { target: { value: 'Christmas Morning' } })
             fireEvent.change(localDateTimeField, { target: { value: "2022-12-25T08:00" } })
 
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
-            expect(mockToast).toBeCalledWith("UCSBDate Updated - id: 17 name: Christmas Morning2");
+            expect(mockToast).toBeCalledWith("UCSBDate Updated - id: 17 name: Christmas Morning");
             expect(mockNavigate).toBeCalledWith({ "to": "/ucsbdates/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 quarterYYYYQ: '20224',
-                name: "Christmas Morning2",
+                name: "Christmas Morning",
                 localDateTime: "2022-12-25T08:00"
             })); // posted object
 
