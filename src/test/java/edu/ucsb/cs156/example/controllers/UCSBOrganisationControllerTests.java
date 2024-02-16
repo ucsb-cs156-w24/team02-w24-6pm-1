@@ -262,10 +262,10 @@ public class UCSBOrganisationControllerTests extends ControllerTestCase {
                                 .build();
 
                 UCSBOrganisation OISSEdited = UCSBOrganisation.builder()
-                                .orgCode("OISS Edit")
-                                .orgTranslationShort("INTERNATIONAL STUDENTS")
-                                .orgTranslation("OFFICE OF INTERNATIONAL STUDENTS AND SCHOLARS")
-                                .inactive(true)
+                                .orgCode("OISS")
+                                .orgTranslationShort("INTERNATIONAL STUDENTSs")
+                                .orgTranslation("OFFICE OF INTERNATIONAL STUDENTS AND SCHOLARSs")
+                                .inactive(false)
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(OISSEdited);
