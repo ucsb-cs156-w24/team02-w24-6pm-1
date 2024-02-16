@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UCSBOrganisationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">team02</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs156.example.controllers</a> &gt; <span class="el_source">UCSBOrganisationController.java</span></div><h1>UCSBOrganisationController.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs156.example.controllers;
+
+import edu.ucsb.cs156.example.entities.UCSBOrganisation;
+import edu.ucsb.cs156.example.errors.EntityNotFoundException;
+import edu.ucsb.cs156.example.repositories.UCSBOrganisationRepository;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+@Tag(name = &quot;UCSBOrganisation&quot;)
+@RequestMapping(&quot;/api/UCSBOrganization&quot;)
+@RestController
+<span class="fc" id="L28">@Slf4j</span>
+<span class="fc" id="L29">public class UCSBOrganisationController extends ApiController {</span>
+
+    @Autowired
+    UCSBOrganisationRepository UCSBOrganisationRepository;
+
+    @Operation(summary= &quot;List all ucsb organisations&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;/all&quot;)
+    public Iterable&lt;UCSBOrganisation&gt; allOrganisations() {
+<span class="fc" id="L38">        Iterable&lt;UCSBOrganisation&gt; commons = UCSBOrganisationRepository.findAll();</span>
+<span class="fc" id="L39">        return commons;</span>
+    }
+
+    @Operation(summary= &quot;Create a new organisation&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PostMapping(&quot;/post&quot;)
+    public UCSBOrganisation postorganisation(
+        @Parameter(name=&quot;orgCode&quot;)                          @RequestParam String orgCode,
+        @Parameter(name=&quot;orgTranslationShort&quot;)              @RequestParam String orgTranslationShort,
+        @Parameter(name=&quot;orgTranslation&quot;)                   @RequestParam String orgTranslation,
+        @Parameter(name=&quot;inactive&quot;)                         @RequestParam boolean inactive
+        // @Parameter(name=&quot;hasDiningCam&quot;)                  @RequestParam boolean hasDiningCam,
+        // @Parameter(name=&quot;latitude&quot;)                      @RequestParam double latitude,
+        // @Parameter(name=&quot;longitude&quot;)                     @RequestParam double longitude
+        )
+        {
+
+<span class="fc" id="L56">        UCSBOrganisation organisation = new UCSBOrganisation();</span>
+<span class="fc" id="L57">        organisation.setOrgCode(orgCode);</span>
+<span class="fc" id="L58">        organisation.setOrgTranslationShort(orgTranslationShort);</span>
+<span class="fc" id="L59">        organisation.setOrgTranslation(orgTranslation);</span>
+<span class="fc" id="L60">        organisation.setInactive(inactive);</span>
+        // commons.setHasDiningCam(hasDiningCam);
+        // commons.setLatitude(latitude);
+        // commons.setLongitude(longitude);
+
+<span class="fc" id="L65">        UCSBOrganisation savedOrganisation = UCSBOrganisationRepository.save(organisation);</span>
+
+<span class="fc" id="L67">        return savedOrganisation;</span>
+    }
+
+    @Operation(summary= &quot;Get a single organisation&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public UCSBOrganisation getById(
+            @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode) {
+<span class="fc" id="L75">                UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)</span>
+<span class="fc" id="L76">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganisation.class, orgCode));</span>
+
+<span class="fc" id="L78">        return organisations;</span>
+    }
+
+    @Operation(summary= &quot;Delete a UCSBOrganisation&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteorganisations(
+            @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode) {
+<span class="fc" id="L86">                UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)</span>
+<span class="fc" id="L87">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganisation.class, orgCode));</span>
+
+<span class="fc" id="L89">        UCSBOrganisationRepository.delete(organisations);</span>
+<span class="fc" id="L90">        return genericMessage(&quot;UCSBOrganisation with id %s deleted&quot;.formatted(orgCode));</span>
+    }
+
+    @Operation(summary= &quot;Update a single organisation&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBOrganisation updateorganisation(
+            @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode,
+            @RequestBody @Valid UCSBOrganisation incoming) {
+
+<span class="fc" id="L100">            UCSBOrganisation organisations = UCSBOrganisationRepository.findById(orgCode)</span>
+<span class="fc" id="L101">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganisation.class, orgCode));</span>
+
+
+                // organisations.setOrgCode(incoming.getOrgCode());  
+<span class="fc" id="L105">                organisations.setOrgTranslationShort(incoming.getOrgTranslationShort());</span>
+<span class="fc" id="L106">                organisations.setOrgTranslation(incoming.getOrgTranslation());</span>
+<span class="fc" id="L107">                organisations.setInactive(incoming.getInactive());</span>
+                // organisations.setLatitude(incoming.getLatitude());
+                // organisations.setLongitude(incoming.getLongitude());
+
+<span class="fc" id="L111">                UCSBOrganisationRepository.save(organisations);</span>
+                
+
+<span class="fc" id="L114">        return organisations;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
