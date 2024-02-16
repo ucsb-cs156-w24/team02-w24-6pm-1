@@ -101,16 +101,17 @@ import javax.validation.Valid;
 <span class="fc" id="L101">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganisation.class, orgCode));</span>
 
 
-<span class="fc" id="L104">                organisations.setOrgCode(incoming.getOrgCode());  </span>
-                // organisations.setOrgTranslationShort(incoming.getOrgTranslationShort());
-                // organisations.setOrgTranslation(incoming.getOrgTranslation());
-                // organisations.setInactive(incoming.getInactive());
+                // organisations.setOrgCode(incoming.getOrgCode());  
+<span class="fc" id="L105">                organisations.setOrgTranslationShort(incoming.getOrgTranslationShort());</span>
+<span class="fc" id="L106">                organisations.setOrgTranslation(incoming.getOrgTranslation());</span>
+<span class="fc" id="L107">                organisations.setInactive(incoming.getInactive());</span>
                 // organisations.setLatitude(incoming.getLatitude());
                 // organisations.setLongitude(incoming.getLongitude());
 
 <span class="fc" id="L111">                UCSBOrganisationRepository.save(organisations);</span>
+                
 
-<span class="fc" id="L113">        return organisations;</span>
+<span class="fc" id="L114">        return organisations;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
