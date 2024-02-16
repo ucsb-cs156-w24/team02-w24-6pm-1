@@ -109,6 +109,7 @@ public class UCSBOrganisationController extends ApiController {
                 // organisations.setLongitude(incoming.getLongitude());
 
                 UCSBOrganisationRepository.save(organisations);
+                
 
         return organisations;
     }
