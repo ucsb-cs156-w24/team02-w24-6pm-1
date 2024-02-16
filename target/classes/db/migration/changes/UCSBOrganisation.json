@@ -1,0 +1,64 @@
+{ "databaseChangeLog": [
+    {
+        "changeSet": {
+          "id": "UCSBOrganisation",
+          "author": "Sanil Katula",
+          "preConditions": [
+            {
+              "onFail": "MARK_RAN"
+            },
+            {
+              "not": [
+                {
+                  "tableExists": {
+                    "tableName": "UCSBORGANISATION"
+                  }
+                }
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "createTable": {
+                "columns": [
+                  {
+                    "column": {
+                      "constraints": {
+                        "primaryKey": true,
+                        "primaryKeyName": "CONSTRAINT_UCSBOrganisation"
+                      },
+                      "name": "org_code",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "constraints": {
+                        "nullable": false
+                      },
+                      "name": "inactive",
+                      "type": "BOOLEAN"
+                    }
+                                   },
+
+                  {
+                    "column": {
+                      "name": "org_translation_short",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "org_translation",
+                      "type": "VARCHAR(255)"
+                    }
+                  }
+                ]
+                ,
+                "tableName": "UCSBORGANISATION"
+              }
+            }]
+
+        }
+    }
+]}
