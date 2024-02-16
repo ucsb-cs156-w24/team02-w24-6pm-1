@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.ucsb.cs156.example.controllers.UCSBOrganisationControllerTests
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.561 s - in edu.ucsb.cs156.example.controllers.UCSBOrganisationControllerTests
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.58 s - in edu.ucsb.cs156.example.controllers.UCSBOrganisationControllerTests
